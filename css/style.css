@@ -165,6 +165,17 @@ background-color: #F4D03F
   margin-top: 10px;
 }
 
+.hintstitlestyle {
+  font-family: verdana;
+  font-size: 70%;
+  color:black;
+  font-weight: bold;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5%;
+}
+
 .featureCheckbox {
   margin: 5px;
 }

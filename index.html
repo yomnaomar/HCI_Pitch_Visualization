@@ -1,88 +1,107 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-      <link rel="stylesheet" href="css/tipped.css" type="text/css">
-      <link rel="stylesheet" href="css/style.css" type="text/css">
-    </head>
-    <body>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-5 side-panel">
-            <div class="participant-selection">
-              <h2>Select Data Files</h2>
-              <form class="form-inline">
-                <label class="sel_label" for="participant_sel">Select participant:</label>
-                <select class="form-control sel_form" id="participant_sel"></select>
-                <label class="sel_label" for="task_sel">Select task:</label>
-                <select class="form-control sel_form" id="task_sel"></select>
-                <a class="btn btn-warning" id="confirmFiles">Confirm</a>
-              </form>
-            </div>
-            <h2>Transcript</h2>
-            <div id="transcriptdiv" class="ScrollStyle"></div>
-          </div>
-          <div class="col-md-7">
-            <h1>Think-Aloud Analysis Tool</h1>
-            <div id="audiodiv">
-              <audio id="audiocontrol" preload = "auto" controls controlsList="nodownload">Your browser does not support this audio element. </audio>
-            </div>
-            <div class="featurepanelstyle">Problem</div>
-            <div class="timeline">
-              <div id="notes_timeline" class="timeline-outline"></div>
-            </div>
-            <div id="chartdiv"></div>
-          </div>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/tipped.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5 side-panel">
+        <div class="participant-selection">
+          <h2>Select Data Files</h2>
+          <form class="form-inline">
+            <label class="sel_label" for="participant_sel">Select participant:</label>
+            <select class="form-control sel_form" id="participant_sel"></select>
+            <label class="sel_label" for="task_sel">Select task:</label>
+            <select class="form-control sel_form" id="task_sel"></select>
+            <a class="btn btn-warning" id="confirmFiles">Confirm</a>
+          </form>
         </div>
-        <div class="row">
-          <div class="col-md-6" style="margin-top: 5px;">
-            <table class="table note-table">
-              <thead>
-                <th>Start</th>
-                <th>End</th>
-                <th>Problem</th>
-                <th>Note</th>
-                <th>Delete</th>
-              </thead>
-              <tbody id="note-table"></tbody>
+        <h2>Transcript</h2>
+        <div id="transcriptdiv" class="ScrollStyle"></div>
+      </div>
+      <div class="col-md-7">
+        <h1>Think-Aloud Analysis Tool</h1>
+        <div id="audiodiv">
+          <audio id="audiocontrol" preload="auto" controls controlsList="nodownload">Your browser does not support this audio element.</audio>
+        </div>
+        <div class="featurepanelstyle">Problem</div>
+        <div class="timeline">
+          <div id="notes_timeline" class="timeline-outline"></div>
+          <div align="center">
+            <div class="hintstitlestyle">Hints</div>
+            <table id="checkbox_table">
+              <tr>
+                <td><img src="js\libs\amstockchart\images\red.png" alt="Red Issue" class="img-thumbnail img-check" height="60" width="60" title="User is questioning the device"></td>
+                <td><img src="js\libs\amstockchart\images\orange.png" alt="Orange Issue" class="img-thumbnail img-check" height="60" width="60" title="User is confused/anxious about the device"></td>
+                <td><img src="js\libs\amstockchart\images\yellow.png" alt="Yellow Issue" class="img-thumbnail img-check" height="60" width="60" title="User is silent/thinking"></td>
+              </tr>
+              <tr>
+                <td align="center"><label class="checkbox-inline"><input type="checkbox" value="red_issue"></label></td>
+                <td align="center"><label class="checkbox-inline"><input type="checkbox" value="orange_issue"></label></td>
+                <td align="center"><label class="checkbox-inline"><input type="checkbox" value="yellow_issue"></label></td>
+              </tr>
             </table>
           </div>
-          <div class="col-md-6 analysis" name="analysis">
-            <form style="margin-left: 10px;">
-              <div class="form-inline">
-                <span class="label">Start time (mm:ss): </span>
-                <input type="text" class="form-control" id="start" size="4">
-                <span class="label">End time (mm:ss): </span>
-                <input type="text" class="form-control" id="end" size="4">
-              </div>
-              <div class="note-form">
-                <div class="form-group row" style="margin-left: 0;">
-                  <label for="probDescription" class="col-form-label label">Problem</label>
-                  <input class="form-control" type="text" id="probDescription" rows = "2" placeholder="Describe the problem that the user is experiencing..." style="width:75%; display: inline-block;">
-                </div>
-                <span class="label">Note</span>
-                <textarea type="text" id= "annotation" class="form-control" style="width:75%; display: inline-block;" rows = "5" placeholder="Describe how the feature indicates/signals the problem..."></textarea>
-                <button type="button" id="addNote" class="btn">Add the Problem</button>
-              </div>
-              <br/>
-            </form>
-          </div>
         </div>
+        <div id="chartdiv"></div>
       </div>
-      <script src="js/libs/jquery-3.2.1.js"></script>
-      <script src="js/libs/lodash.js"></script>
-      <script src="js/libs/tipped.js"></script>
-      <script src="js/libs/randomColor.js"></script>
-      <script src="js/libs/8a336b2f8c.js"></script>
-      <script src="js/libs/moment.js"></script>
-      <script src="js/libs/jquery.key.js"></script>
-      <script src="js/libs/amcharts/amcharts/amcharts.js"></script>
-      <script src="js/libs/amcharts/amcharts/serial.js"></script>
-      <script src="js/libs/amcharts/amcharts/themes/light.js"></script>
-      <script src="js/libs/amstockchart/amcharts/amstock.js"></script>
-      <script src="js/libs/amcharts/amcharts/plugins/dataloader/dataloader.min.js"></script>
-      <script src="js/libs/amcharts/amcharts/plugins/export/export.min.js"></script>
-      <script src="js/main.js"></script>
-    </body>
+    </div>
+    <div class="row">
+      <div class="col-md-6" style="margin-top: 5px;">
+        <table class="table note-table">
+          <thead>
+            <th>Start</th>
+            <th>End</th>
+            <th>Problem</th>
+            <th>Note</th>
+            <th>Delete</th>
+          </thead>
+          <tbody id="note-table"></tbody>
+        </table>
+      </div>
+      <div class="col-md-6 analysis" name="analysis">
+        <form style="margin-left: 10px;">
+          <div class="form-inline">
+            <span class="label">Start time (mm:ss): </span>
+            <input type="text" class="form-control" id="start" size="4">
+            <span class="label">End time (mm:ss): </span>
+            <input type="text" class="form-control" id="end" size="4">
+          </div>
+          <div class="note-form">
+            <div class="form-group row" style="margin-left: 0;">
+              <label for="probDescription" class="col-form-label label">Problem</label>
+              <input class="form-control" type="text" id="probDescription" rows="2" placeholder="Describe the problem that the user is experiencing..."
+                style="width:75%; display: inline-block;">
+            </div>
+            <span class="label">Note</span>
+            <textarea type="text" id="annotation" class="form-control" style="width:75%; display: inline-block;" rows="5" placeholder="Describe how the feature indicates/signals the problem..."></textarea>
+            <button type="button" id="addNote" class="btn">Add the Problem</button>
+          </div>
+          <br/>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="js/libs/jquery-3.2.1.js"></script>
+  <script src="js/libs/lodash.js"></script>
+  <script src="js/libs/tipped.js"></script>
+  <script src="js/libs/randomColor.js"></script>
+  <script src="js/libs/8a336b2f8c.js"></script>
+  <script src="js/libs/moment.js"></script>
+  <script src="js/libs/jquery.key.js"></script>
+  <script src="js/libs/amcharts/amcharts/amcharts.js"></script>
+  <script src="js/libs/amcharts/amcharts/serial.js"></script>
+  <script src="js/libs/amcharts/amcharts/themes/light.js"></script>
+  <script src="js/libs/amstockchart/amcharts/amstock.js"></script>
+  <script src="js/libs/amcharts/amcharts/plugins/dataloader/dataloader.min.js"></script>
+  <script src="js/libs/amcharts/amcharts/plugins/export/export.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
 </html>
