@@ -1,0 +1,135 @@
+[
+{
+  "id": 1,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p1/coffeemachine/coffeemachine-p1.json",
+    "filler": "./data/p1/coffeemachine/verbalfiller-p1-coffee.json",
+    "silence": "./data/p1/coffeemachine/coffeemachine-silence-p1.json",
+    "audio": "./data/p1/coffeemachine/coffeemachine-p1.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p1/universalremote/universalremote-p1.json",
+    "filler": "./data/p1/universalremote/verbalfiller-p1-remote.json",
+    "silence": "./data/p1/universalremote/universalremote-silence-p1.json",
+    "audio": "./data/p1/universalremote/universalremote-p1.wav"
+  }]
+},
+
+{
+  "id": 2,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p2/coffeemachine/coffeemachine-p2.json",
+    "filler": "./data/p2/coffeemachine/verbalfiller-p2-coffee.json",
+    "silence": "./data/p2/coffeemachine/coffeemachine-silence-p2.json",
+    "audio": "./data/p2/coffeemachine/coffeemachine-p2.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p2/universalremote/universalremote-p2.json",
+    "filler": "./data/p2/universalremote/verbalfiller-p2-remote.json",
+    "silence": "./data/p2/universalremote/universalremote-silence-p2.json",
+    "audio": "./data/p2/universalremote/universalremote-p2.wav"
+  }]
+},
+{
+  "id": 3,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p3/coffeemachine/coffeemachine-p3.json",
+    "filler": "./data/p3/coffeemachine/verbalfiller-p3-coffee.json",
+    "silence": "./data/p3/coffeemachine/coffeemachine-silence-p3.json",
+    "audio": "./data/p3/coffeemachine/coffeemachine-p3.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p3/universalremote/universalremote-p3.json",
+    "filler": "./data/p3/universalremote/verbalfiller-p3-remote.json",
+    "silence": "./data/p3/universalremote/universalremote-silence-p3.json",
+    "audio": "./data/p3/universalremote/universalremote-p3.wav"
+  }]
+},
+{
+  "id": 4,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p4/coffeemachine/coffeemachine-p4.json",
+    "filler": "./data/p4/coffeemachine/verbalfiller-p4-coffee.json",
+    "silence": "./data/p4/coffeemachine/coffeemachine-silence-p4.json",
+    "audio": "./data/p4/coffeemachine/coffeemachine-p4.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p4/universalremote/universalremote-p4.json",
+    "filler": "./data/p4/universalremote/verbalfiller-p4-remote.json",
+    "silence": "./data/p4/universalremote/universalremote-silence-p4.json",
+    "audio": "./data/p4/universalremote/universalremote-p4.wav"
+  }]
+},
+
+{
+  "id": 5,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p5/coffeemachine/coffeemachine-p5.json",
+    "filler": "./data/p5/coffeemachine/verbalfiller-p5-coffee.json",
+    "silence": "./data/p5/coffeemachine/coffeemachine-silence-p5.json",
+    "audio": "./data/p5/coffeemachine/coffeemachine-p5.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p5/universalremote/universalremote-p5.json",
+    "filler": "./data/p5/universalremote/verbalfiller-p5-remote.json",
+    "silence": "./data/p5/universalremote/universalremote-silence-p5.json",
+    "audio": "./data/p5/universalremote/universalremote-p5.wav"
+  }]
+},
+
+{
+  "id": 6,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p6/coffeemachine/coffeemachine-p6.json",
+    "filler": "./data/p6/coffeemachine/verbalfiller-p6-coffee.json",
+    "silence": "./data/p6/coffeemachine/coffeemachine-silence-p6.json",
+    "audio": "./data/p6/coffeemachine/coffeemachine-p6.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p6/universalremote/universalremote-p6.json",
+    "filler": "./data/p6/universalremote/verbalfiller-p6-remote.json",
+    "silence": "./data/p6/universalremote/universalremote-silence-p6.json",
+    "audio": "./data/p6/universalremote/universalremote-p6.wav"
+  }]
+},
+
+{
+  "id": 7,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p7/coffeemachine/coffeemachine-p7.json",
+    "filler": "./data/p7/coffeemachine/verbalfiller-p7-coffee.json",
+    "silence": "./data/p7/coffeemachine/coffeemachine-silence-p7.json",
+    "audio": "./data/p7/coffeemachine/coffeemachine-p7.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p7/universalremote/universalremote-p7.json",
+    "filler": "./data/p7/universalremote/verbalfiller-p7-remote.json",
+    "silence": "./data/p7/universalremote/universalremote-silence-p7.json",
+    "audio": "./data/p7/universalremote/universalremote-p7.wav"
+  }]
+},
+
+{
+  "id": 8,
+  "tasks": [{
+    "id": 1,
+    "data": "./data/p8/coffeemachine/coffeemachine-p8.json",
+    "filler": "./data/p8/coffeemachine/verbalfiller-p8-coffee.json",
+    "silence": "./data/p8/coffeemachine/coffeemachine-silence-p8.json",
+    "audio": "./data/p8/coffeemachine/coffeemachine-p8.wav"
+  }, {
+    "id": 2,
+    "data": "./data/p8/universalremote/universalremote-p8.json",
+    "filler": "./data/p8/universalremote/verbalfiller-p8-remote.json",
+    "silence": "./data/p8/universalremote/universalremote-silence-p8.json",
+    "audio": "./data/p8/universalremote/universalremote-p8.wav"
+  }]
+}
+]

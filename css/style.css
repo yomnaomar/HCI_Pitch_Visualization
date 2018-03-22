@@ -1,0 +1,248 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+
+h1 {
+	display: block;
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	font-weight: bold;
+	text-align: center;
+}
+
+div {
+  width: auto;
+  margin: auto;
+}
+
+form {
+  	text-align: center;
+    width: 100%;
+}
+
+h2 {
+  display: block;
+  text-align: center;
+}
+
+.highlight
+{
+background-color: #F4D03F
+}
+
+.positive
+{
+  background-color: #28B463
+}
+
+.negative
+{
+  background-color: #CB4335
+}
+
+.neutral
+{
+  background-color: #F4F6F7
+}
+
+#chartdiv {
+  width: 90%;
+  height: 600px;
+	margin: auto;
+}
+
+#transcriptdiv {
+  width: 90%;
+  height: auto;
+	margin: auto;
+}
+
+#loudnesschartdiv {
+  width: 90%;
+  height: 150px;
+	margin: auto;
+}
+
+
+#pitchchartdiv {
+  width: 90%;
+  height: 150px;
+	margin: auto;
+}
+
+
+#silencechartdiv {
+  width: 90%;
+  height: 150px;
+	margin: auto;
+}
+
+#sentimentchartdiv {
+  width: 90%;
+  height: 150px;
+	margin: auto;
+}
+
+#chartdiv2 {
+  width: 90%;
+  height: 750px;
+	margin: auto;
+}
+
+#audiodiv {
+  width: 90%;
+  height: 50px;
+	margin: auto;
+}
+
+
+#audiocontrol {
+  width: 100%;
+  height: 100%;
+	margin: auto;
+}
+
+.category1{
+  margin-top: 5px;
+  background-color: #3498DB;
+}
+
+.category2{
+  margin-top: 5px;
+  background-color: #1ABC9C;
+}
+
+.category3{
+  margin-top: 5px;
+  background-color: #F1C40F;
+}
+
+.category4{
+  margin-top: 5px;
+  background-color: #D35400;
+}
+
+.timeline {
+  width: 90%;
+}
+
+.timeline-outline {
+  height: 30px;
+  border: 1px black solid;
+  border-radius: 3px;
+  position: relative;
+}
+.timeline-notes {
+  position: relative;
+}
+.timeline-element {
+  height: 29px;
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+}
+.timeline-element .label_text {
+  color: white;
+}
+
+.featurediv {
+  height: 100%;
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+}
+
+.featurepanelstyle {
+  font-family: verdana;
+  font-size: 70%;
+  color:black;
+  font-weight: bold;
+  width: 90%;
+  margin-top: 10px;
+}
+
+.featureCheckbox {
+  margin: 5px;
+}
+
+.participant-selection {
+  margin-left: 35px;
+  margin-bottom: 20px;
+}
+
+.participant-selection > select {
+  margin: 5px;
+}
+
+.sel_label {
+  margin: 5px;
+}
+
+.sel_form {
+  margin: 5px;
+}
+
+.side-panel {
+  margin: 1em 0 0 0;
+}
+
+.label {
+  font-weight: bold;
+  margin: 0 5px;
+  vertical-align: top;
+}
+
+.note-table {
+  margin-left: 35px;
+  margin-right: 10px;
+}
+
+.note-form {
+  margin: 10px 0;
+  text-align: left;
+}
+
+.note-form .btn {
+  vertical-align: top;
+}
+
+.analysis {
+  margin-top: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.timeline-indicator {
+  border: 1px solid black;
+}
+
+/* basic positioning */
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend .legend_element { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .positivelengend { background-color: #28B463; margin-top: 7px;}
+.legend .neutrallengend { background-color: #F4F6F7; margin-top: 7px;}
+.legend .negativelengend { background-color: #CB4335; margin-top: 7px;}
+
+.legend .reading_legend { background-color: #0275d8; }
+.legend .procedure_legend { background-color: #5cb85c; }
+.legend .observation_legend { background-color: #f0ad4e; }
+.legend .explanation_legend { background-color: #d9534f; }
+
+
+.ScrollStyle
+{
+    max-height: 880px;
+    overflow-y: scroll;
+}
