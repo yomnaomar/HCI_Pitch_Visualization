@@ -116,6 +116,42 @@ window.onload = function () {
     download(audioLog, audioFile, 'text/plain');
   });
 
+  $("#red_issue").change(function() {
+    var $checkbox = $(this);
+    if ($checkbox.prop('checked')) {
+      highlightIssues(100, 150, "#B71C1C");
+    } else {
+      $('#notes_timeline').empty();
+      $('#checkbox_table').empty();
+      $('#orange_issue').prop('checked', false);
+      $('#yellow_issue').prop('checked', false);
+    }
+  });
+
+  $("#orange_issue").change(function() {
+    var $checkbox = $(this);
+    if ($checkbox.prop('checked')) {
+      highlightIssues(250, 350, "#E65100");
+    } else {
+      $('#notes_timeline').empty();
+      $('#checkbox_table').empty();
+      $('#red_issue').prop('checked', false);
+      $('#yellow_issue').prop('checked', false);
+    }
+  });
+
+  $("#yellow_issue").change(function() {
+    var $checkbox = $(this);
+    if ($checkbox.prop('checked')) {
+      highlightIssues(500, 750, "#FFEE58");
+    } else {
+      $('#notes_timeline').empty();
+      $('#checkbox_table').empty();
+      $('#red_issue').prop('checked', false);
+      $('#orange_issue').prop('checked', false);
+    }
+  });
+
   setTranscriptSelectionEventListener();
 };
 
@@ -160,7 +196,6 @@ function loadTaskData() {  //load the audio when the UI is displayed
       console.log("data is ready...");
       mChart = drawCharts();
       drawTranscript();
-      highlightIssues(250, 350, "#551a8b");
     }
     else {
       setTimeout(myTimer, 500);
@@ -439,6 +474,7 @@ function drawTimeIndicator(timestamp) {
 //highlight the corresponding segment in the note  timeline when a portion of the transcript is selected
 function highlightNoteTimeline(startTime, endTime) { //#00FFFFFF
   $('#notes_timeline').empty();
+  $('#checkbox_table').empty();
   let duration = timeline_end - timeline_start;
   _.each(note_array, function (label) {
     //console.log("label.start:" + label.startTime + "; timeline_end :" + timeline_end);

@@ -35,18 +35,21 @@
           <div id="notes_timeline" class="timeline-outline"></div>
           <div align="center">
             <div class="hintstitlestyle">Hints</div>
-            <table id="checkbox_table">
+            <table>
               <tr>
                 <td><img src="js\libs\amstockchart\images\red.png" alt="Red Issue" class="img-thumbnail img-check" height="60" width="60" title="User is questioning the device"></td>
                 <td><img src="js\libs\amstockchart\images\orange.png" alt="Orange Issue" class="img-thumbnail img-check" height="60" width="60" title="User is confused/anxious about the device"></td>
                 <td><img src="js\libs\amstockchart\images\yellow.png" alt="Yellow Issue" class="img-thumbnail img-check" height="60" width="60" title="User is silent/thinking"></td>
               </tr>
               <tr>
-                <td align="center"><label class="checkbox-inline"><input type="checkbox" value="red_issue"></label></td>
-                <td align="center"><label class="checkbox-inline"><input type="checkbox" value="orange_issue"></label></td>
-                <td align="center"><label class="checkbox-inline"><input type="checkbox" value="yellow_issue"></label></td>
+                <form id="checkbox_form">
+                  <td align="center"><label class="checkbox-inline"><input type="checkbox" value="red_issue" id="red_issue"></label></td>
+                  <td align="center"><label class="checkbox-inline"><input type="checkbox" value="orange_issue" id="orange_issue"></label></td>
+                  <td align="center"><label class="checkbox-inline"><input type="checkbox" value="yellow_issue" id="yellow_issue"></label></td>
+                </form>
               </tr>
             </table>
+            <div id="checkbox_table"></div>
           </div>
         </div>
         <div id="chartdiv"></div>
