@@ -127,8 +127,8 @@ window.onload = function () {
         } else {
             $('#notes_timeline').empty();
             $('#checkbox_table').empty();
-            $('#orange_issue').prop('checked', false);
-            $('#yellow_issue').prop('checked', false);
+            //$('#orange_issue').prop('checked', false);
+            //$('#yellow_issue').prop('checked', false);
         }
 
   });
@@ -141,8 +141,8 @@ window.onload = function () {
     } else {
       $('#notes_timeline').empty();
       $('#checkbox_table').empty();
-      $('#red_issue').prop('checked', false);
-      $('#yellow_issue').prop('checked', false);
+      //$('#red_issue').prop('checked', false);
+      //$('#yellow_issue').prop('checked', false);
     }
   });
 
@@ -154,8 +154,8 @@ window.onload = function () {
     } else {
       $('#notes_timeline').empty();
       $('#checkbox_table').empty();
-      $('#red_issue').prop('checked', false);
-      $('#orange_issue').prop('checked', false);
+      //$('#red_issue').prop('checked', false);
+      //$('#orange_issue').prop('checked', false);
     }
   });
 
@@ -608,11 +608,17 @@ function noIssueMessage(color) {
     popup.classList.toggle("show");
 }
 
+//TODO: there is some bug here, when hiding it does not hide when uncheck
 function hidePopups() {
-    var x = documents.getElementsByClassName("popuptext show");
-    for (i = 0; i < x.lenght; i++) {
-        x[i].classList.value = "popuptext";
-    }
+    var x = document.getElementById("redPopup");
+    if (x.classList.value == "popuptext show")
+        x.classList.value = "popuptext";
+    x = document.getElementById("orangePopup");
+    if (x.classList.value == "popuptext show")
+        x.classList.value = "popuptext";
+    x = document.getElementById("yellowPopup");
+    if (x.classList.value == "popuptext show")
+        x.classList.value = "popuptext";
 }
 
 function getIssueTimes(colorName) {
@@ -729,12 +735,21 @@ function handleZoom(event) {
     timeline_end = moment.duration(event.endValue).asMilliseconds() / 1000.0;
 
     //toggle the checkboxes when zoomed in order to update highlight
-    $('#red_issue').trigger('click');
-    $('#red_issue').trigger('click');
-    $('#orange_issue').trigger('click');
-    $('#orange_issue').trigger('click');
-    $('#yellow_issue').trigger('click');
-    $('#yellow_issue').trigger('click');
+    var x = document.getElementById("red_issue");
+    if (x.checked == true) {
+        x.click();
+        x.click();
+    }
+    x = document.getElementById("orange_issue");
+    if (x.checked == true) {
+        x.click();
+        x.click();
+    }
+    x = document.getElementById("yellow_issue");
+    if (x.checked == true) {
+       x.click();
+       x.click();
+    }
 }
 
 setTimeout(myTimer2, 500);
