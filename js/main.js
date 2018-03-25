@@ -7,7 +7,10 @@ var note_array = [];
 var participants_files = [];
 var task_data;
 var timeline_start, timeline_end;
-var pitchData = [], transcriptData = [];
+var pitchData = [], transcriptData = [], pitchDataInSec = [];
+var redStartTimes = [], redEndTimes = [];
+var orangeStartTimes = [], orangeEndTimes = [];
+var yellowStartTimes = [], yellowEndTimes = [];
 var segmentPlayStart;
 var logAudio = [];
 //this variable is to mark whether the mouse select operation is executed so that it can be distinguished from click
@@ -42,7 +45,7 @@ window.onload = function () {
     let task = $('#task_sel').val();
 
     task_data = _.find(_.find(participants_files, { 'id': parseInt(participant) }).tasks, { 'id': parseInt(task) });
-    loadTaskData(task_data);
+      loadTaskData(task_data);
   });
 
   $('#addNote').on('click', function () {
@@ -116,22 +119,25 @@ window.onload = function () {
     download(audioLog, audioFile, 'text/plain');
   });
 
-  $("#red_issue").change(function() {
+  $("#red_issue").change(function () {
+    hidePopups()
     var $checkbox = $(this);
-    if ($checkbox.prop('checked')) {
-      highlightIssues(100, 150, "#B71C1C");
-    } else {
-      $('#notes_timeline').empty();
-      $('#checkbox_table').empty();
-      $('#orange_issue').prop('checked', false);
-      $('#yellow_issue').prop('checked', false);
-    }
+        if ($checkbox.prop('checked')) {
+            highlightIssues('red', "#B71C1C");
+        } else {
+            $('#notes_timeline').empty();
+            $('#checkbox_table').empty();
+            $('#orange_issue').prop('checked', false);
+            $('#yellow_issue').prop('checked', false);
+        }
+
   });
 
-  $("#orange_issue").change(function() {
+  $("#orange_issue").change(function () {
+    hidePopups()
     var $checkbox = $(this);
     if ($checkbox.prop('checked')) {
-      highlightIssues(250, 350, "#E65100");
+      highlightIssues('orange', "#E65100");
     } else {
       $('#notes_timeline').empty();
       $('#checkbox_table').empty();
@@ -140,10 +146,11 @@ window.onload = function () {
     }
   });
 
-  $("#yellow_issue").change(function() {
+  $("#yellow_issue").change(function () {
+    hidePopups()
     var $checkbox = $(this);
     if ($checkbox.prop('checked')) {
-      highlightIssues(500, 750, "#FFEE58");
+      highlightIssues('yellow', "#FFEE58");
     } else {
       $('#notes_timeline').empty();
       $('#checkbox_table').empty();
@@ -191,17 +198,85 @@ function loadTaskData() {  //load the audio when the UI is displayed
   [transcriptData, pitchData] = parseData(task_data.data);
 
   setTimeout(myTimer, 500);
-  function myTimer() {
-    if (pitchData.length != 0 && transcriptData.length != 0) {
-      console.log("data is ready...");
-      mChart = drawCharts();
-      drawTranscript();
+    function myTimer() {
+        if (pitchData.length != 0 && transcriptData.length != 0) {
+            console.log("data is being prepared...");
+
+            //map pitch data to seconds
+            pitchDataInSec.push(pitchData[0]);
+            for (i = 1; i < pitchData.length; i++) {
+                if (Math.floor(pitchData[i]["time"] / 1000) >= pitchDataInSec.length)
+                    pitchDataInSec.push(pitchData[i]);
+            }
+            
+            let avg = getAverage();
+            let step = 5;
+            let rangeUp = 0, rangeDown = 0;
+            identifyRedEmotions(avg, step, rangeUp, rangeDown);
+
+            identifyOrangeEmotions(avg, step, rangeUp, rangeDown);
+
+            let diff = 10;
+            identifyYellowEmotions(avg, step, diff);
+
+            console.log("data is ready...");
+            mChart = drawCharts();
+            drawTranscript();
+        }
+        else {
+            setTimeout(myTimer, 500);
+        }
     }
-    else {
-      setTimeout(myTimer, 500);
-    }
-  }
+
 };
+
+function getAverage() {
+    var sum = 0;
+    for (var i = 0; i < pitchDataInSec.length; i++) {
+        sum += pitchDataInSec[i]["data"]; //don't forget to add the base
+    }
+    var avg = sum / pitchDataInSec.length;
+    return avg;
+}
+
+function identifyRedEmotions(avg, step, rangeUp, rangeDown) {
+    var starts = [], ends = [0];
+    //TODO
+    redStartTimes = starts;
+    redEndTimes = ends;
+}
+
+function identifyOrangeEmotions(avg, step, rangeUp, rangeDown) {
+    var starts = [], ends = [0];
+    //TODO
+    orangeStartTimes = starts;
+    orangeEndTimes = ends;
+}
+
+function identifyYellowEmotions(avg, step, diff) {
+    var starts = [], ends = [0];
+    var idx = 0;
+    for (var i = 0; i < pitchDataInSec.length - 3; i++) {
+        if (Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 1]["data"])) <= diff
+            && Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 2]["data"])) <= diff
+            && Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 3]["data"])) <= diff) {
+            let t = pitchDataInSec[i]["time"] / 1000 //convert millisec to seconds 
+            if (ends[ends.length - 1] < t || starts.length==0 ) {
+                if (t - step >= 0 && ends[ends.length - 1] <= t - step)
+                    starts.push(t - step); // start step seconds earlier
+                else
+                    starts.push(t);
+                if (ends.length < starts.length)   //1, 0 -> 1, 1 yes;  1,2->no
+                    ends.push(t + step); //end step seconds after
+                else
+                    ends[ends.length - 1] = t+step // rewrite the end time
+            }
+        }
+    }
+    yellowStartTimes = starts;
+    yellowEndTimes = ends;
+}
+
 
 function recordStart() {
   segmentPlayStart = mAudio.currentTime;
@@ -239,7 +314,7 @@ function parseData(dataset_url) {
       }
 
     }
-  });
+    });
   return [transcriptData, pitchData];
 }
 
@@ -439,7 +514,9 @@ function transcriptMouseupHandler() {
       mChart.panels[0].chartCursor.showCursorAt(currentDate);
       drawTimeIndicator(currentDate);
       updateTranscriptOnSelection(startInSecs, endInSecs);
-      highlightNoteTimeline(startInSecs, endInSecs);
+        highlightNoteTimeline(startInSecs, endInSecs);
+
+
     }
   }
 }
@@ -511,7 +588,54 @@ function highlightNoteTimeline(startTime, endTime) { //#00FFFFFF
   }
 }
 
-function highlightIssues(startTime, endTime, color) {
+function highlightIssues(colorName, color) {
+    let slices = getIssueTimes(colorName)
+    let len = slices[0].length
+    if (len > 0) {
+        for (i = 0; i < len; i++) {
+            highlightSingleIssue(slices[0][i], slices[1][i], color);
+        }
+    }
+    else {
+        noIssueMessage(colorName)
+    }
+
+}
+
+// When no issues found open the popup
+function noIssueMessage(color) {
+    var popup = document.getElementById(color+"Popup");
+    popup.classList.toggle("show");
+}
+
+function hidePopups() {
+    var x = documents.getElementsByClassName("popuptext show");
+    for (i = 0; i < x.lenght; i++) {
+        x[i].classList.value = "popuptext";
+    }
+}
+
+function getIssueTimes(colorName) {
+    let startTimes;
+    let endTimes;
+    switch (colorName) {
+        case "red":
+            startTimes = redStartTimes;
+            endTimes = redEndTimes;
+            break;
+        case "orange":
+            startTimes = orangeStartTimes;
+            endTimes = orangeEndTimes;
+            break;
+        case "yellow":
+            startTimes = yellowStartTimes;
+            endTimes = yellowEndTimes;
+            break;
+    }
+    return [startTimes, endTimes]
+}
+
+function highlightSingleIssue(startTime, endTime, color) {
   let duration = timeline_end - timeline_start;
   _.each(note_array, function (label) {
     //console.log("label.start:" + label.startTime + "; timeline_end :" + timeline_end);
@@ -601,8 +725,16 @@ function updateTranscriptOnSelection(startTime, endTime) {
 }
 
 function handleZoom(event) {
-  timeline_start = moment.duration(event.startValue).asMilliseconds() / 1000.0;
-  timeline_end = moment.duration(event.endValue).asMilliseconds() / 1000.0;
+    timeline_start = moment.duration(event.startValue).asMilliseconds() / 1000.0;
+    timeline_end = moment.duration(event.endValue).asMilliseconds() / 1000.0;
+
+    //toggle the checkboxes when zoomed in order to update highlight
+    $('#red_issue').trigger('click');
+    $('#red_issue').trigger('click');
+    $('#orange_issue').trigger('click');
+    $('#orange_issue').trigger('click');
+    $('#yellow_issue').trigger('click');
+    $('#yellow_issue').trigger('click');
 }
 
 setTimeout(myTimer2, 500);
