@@ -222,7 +222,7 @@ function loadTaskData() {  //load the audio when the UI is displayed
             let step = 10;
             identifyRedEmotions(avg, step, max, sd);
 
-            identifyRedEmotions(avg, step, min, sd);
+            identifyOrangeEmotions(avg, step, min, sd);
 
             let diff = 10;
             identifyYellowEmotions(avg, step, diff);
