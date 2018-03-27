@@ -127,8 +127,8 @@ window.onload = function () {
         } else {
             $('#notes_timeline').empty();
             $('#checkbox_table').empty();
-            //$('#orange_issue').prop('checked', false);
-            //$('#yellow_issue').prop('checked', false);
+            $('#orange_issue').prop('checked', false);
+            $('#yellow_issue').prop('checked', false);
         }
 
   });
@@ -141,8 +141,8 @@ window.onload = function () {
     } else {
       $('#notes_timeline').empty();
       $('#checkbox_table').empty();
-      //$('#red_issue').prop('checked', false);
-      //$('#yellow_issue').prop('checked', false);
+      $('#red_issue').prop('checked', false);
+      $('#yellow_issue').prop('checked', false);
     }
   });
 
@@ -154,8 +154,8 @@ window.onload = function () {
     } else {
       $('#notes_timeline').empty();
       $('#checkbox_table').empty();
-      //$('#red_issue').prop('checked', false);
-      //$('#orange_issue').prop('checked', false);
+      $('#red_issue').prop('checked', false);
+      $('#orange_issue').prop('checked', false);
     }
   });
 
@@ -204,17 +204,25 @@ function loadTaskData() {  //load the audio when the UI is displayed
 
             //map pitch data to seconds
             pitchDataInSec.push(pitchData[0]);
+            let max = pitchDataInSec[0]["data"];
+            let min = pitchDataInSec[0]["data"];
             for (i = 1; i < pitchData.length; i++) {
-                if (Math.floor(pitchData[i]["time"] / 1000) >= pitchDataInSec.length)
+                if (Math.floor(pitchData[i]["time"] / 1000) >= pitchDataInSec.length) {
                     pitchDataInSec.push(pitchData[i]);
+                    if (max < pitchData[i]["data"])
+                        max = pitchData[i]["data"];
+                    if (min > pitchData[i]["data"])
+                        min = pitchData[i]["data"];
+
+                }
             }
             
             let avg = getAverage();
-            let step = 5;
-            let rangeUp = 0, rangeDown = 0;
-            identifyRedEmotions(avg, step, rangeUp, rangeDown);
+            let sd = getStandardDev(avg);
+            let step = 10;
+            identifyRedEmotions(avg, step, max, sd);
 
-            identifyOrangeEmotions(avg, step, rangeUp, rangeDown);
+            identifyRedEmotions(avg, step, min, sd);
 
             let diff = 10;
             identifyYellowEmotions(avg, step, diff);
@@ -239,16 +247,58 @@ function getAverage() {
     return avg;
 }
 
-function identifyRedEmotions(avg, step, rangeUp, rangeDown) {
+function getStandardDev(avg) {
+    var sum = 0; 
+    for (var i = 0; i < pitchDataInSec.length; i++) {
+        sum += Math.pow((pitchDataInSec[i]["data"] - avg), 2); //don't forget to add the base
+    }
+    var sd = sum / pitchDataInSec.length;
+    sd = Math.sqrt(sd);
+    return sd;
+}
+
+function identifyRedEmotions(avg, step, max, sd) {
     var starts = [], ends = [0];
-    //TODO
+    var idx = 0;
+    for (var i = 0; i < pitchDataInSec.length; i++) {
+        if (pitchDataInSec[i]["data"] >= max - sd
+            /*&& Math.abs(pitchDataInSec[i+1]["data"] - max) <= sd
+            && Math.abs(pitchDataInSec[i+2]["data"] - max) <= sd*/) {
+            let t = pitchDataInSec[i]["time"] / 1000 //convert millisec to seconds 
+            if (ends[ends.length - 1] < t || starts.length == 0) {
+                if (t - step >= 0 && ends[ends.length - 1] <= t - step)
+                    starts.push(t - step); // start step seconds earlier
+                else
+                    starts.push(t);
+                if (ends.length < starts.length)   //1, 0 -> 1, 1 yes;  1,2->no
+                    ends.push(t + step + 1); //end step seconds after
+                else
+                    ends[ends.length - 1] = t + step // rewrite the end time
+            }
+        }
+    }
     redStartTimes = starts;
     redEndTimes = ends;
 }
 
-function identifyOrangeEmotions(avg, step, rangeUp, rangeDown) {
+function identifyOrangeEmotions(avg, step, min, sd) {
     var starts = [], ends = [0];
-    //TODO
+    var idx = 0;
+    for (var i = 0; i < pitchDataInSec.length; i++) {
+        if (pitchDataInSec[i]["data"] <= min + sd) {
+            let t = pitchDataInSec[i]["time"] / 1000 //convert millisec to seconds 
+            if (ends[ends.length - 1] < t || starts.length == 0) {
+                if (t - step >= 0 && ends[ends.length - 1] <= t - step)
+                    starts.push(t - step); // start step seconds earlier
+                else
+                    starts.push(t);
+                if (ends.length < starts.length)   //1, 0 -> 1, 1 yes;  1,2->no
+                    ends.push(t + step + 1); //end step seconds after
+                else
+                    ends[ends.length - 1] = t + step // rewrite the end time
+            }
+        }
+    }
     orangeStartTimes = starts;
     orangeEndTimes = ends;
 }
@@ -267,7 +317,7 @@ function identifyYellowEmotions(avg, step, diff) {
                 else
                     starts.push(t);
                 if (ends.length < starts.length)   //1, 0 -> 1, 1 yes;  1,2->no
-                    ends.push(t + step); //end step seconds after
+                    ends.push(t + step+1); //end step seconds after
                 else
                     ends[ends.length - 1] = t+step // rewrite the end time
             }
@@ -608,7 +658,6 @@ function noIssueMessage(color) {
     popup.classList.toggle("show");
 }
 
-//TODO: there is some bug here, when hiding it does not hide when uncheck
 function hidePopups() {
     var x = document.getElementById("redPopup");
     if (x.classList.value == "popuptext show")

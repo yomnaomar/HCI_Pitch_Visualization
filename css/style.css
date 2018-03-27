@@ -249,7 +249,7 @@ background-color: #F4D03F
   color:black;
   font-weight: bold;
   width: 90%;
-  margin-top: 10px;
+  margin-left: -5px;
 }
 
 .hintstitlestyle {
@@ -259,7 +259,6 @@ background-color: #F4D03F
   font-weight: bold;
   width: 90%;
   margin-top: 10px;
-  margin-bottom: 10px;
   margin-left: 5%;
 }
 
