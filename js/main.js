@@ -598,6 +598,8 @@ function drawTimeIndicator(timestamp) {
 //highlight the corresponding segment in the note  timeline when a portion of the transcript is selected
 function highlightNoteTimeline(startTime, endTime) { //#00FFFFFF
   $('#notes_timeline').empty();
+  $('#red_issue').prop('checked', false);
+  $('#yellow_issue').prop('checked', false);
   let duration = timeline_end - timeline_start;
   _.each(note_array, function (label) {
     //console.log("label.start:" + label.startTime + "; timeline_end :" + timeline_end);
