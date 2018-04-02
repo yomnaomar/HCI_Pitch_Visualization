@@ -303,10 +303,10 @@ function identifyRedEmotions(avg, step, max, sd) {
 function identifyYellowEmotions(avg, step, diff) {
     var starts = [], ends = [0];
     var idx = 0;
-    for (var i = 0; i < pitchDataInSec.length - 3; i++) {
-        if (Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 1]["data"])) <= diff
-            && Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 2]["data"])) <= diff
-            && Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 3]["data"])) <= diff) {
+    for (var i = 1; i < pitchDataInSec.length - 2; i++) {
+        if (Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i - 1]["data"])) <= diff
+            && Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 1]["data"])) <= diff
+            && Math.abs(pitchDataInSec[i]["data"] - (pitchDataInSec[i + 2]["data"])) <= diff) {
             let t = pitchDataInSec[i]["time"] / 1000 //convert millisec to seconds 
             if (ends[ends.length - 1] < t || starts.length==0 ) {
                 if (t - step >= 0 && ends[ends.length - 1] <= t - step)
