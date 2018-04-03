@@ -199,9 +199,11 @@ function loadTaskData() {  //load the audio when the UI is displayed
         if (pitchData.length != 0 && transcriptData.length != 0) {
             console.log("data is being prepared...");
 
-            //map pitch data to seconds
+            //convert pitchData to list in seconds
             pitchDataInSec.push(pitchData[0]);
+            //maximum pitch so far  
             let max = pitchDataInSec[0]["data"];
+            //minimum pitch so far
             let min = pitchDataInSec[0]["data"];
             for (i = 1; i < pitchData.length; i++) {
                 if (Math.floor(pitchData[i]["time"] / 1000) >= pitchDataInSec.length) {
@@ -213,15 +215,16 @@ function loadTaskData() {  //load the audio when the UI is displayed
 
                 }
             }
-            
-            let avg = getAverage();
-            let sd = getStandardDev(avg);
-            let step = 10;
+
+            let avg = getAverage();   // average pitch value
+            let sd = getStandardDev(avg);   // standard deviation value of selected pitch
+
+            let step = 10;  //width of region to add into highlight before and after the identified segment
             identifyRedEmotions(avg, step, max, sd);
 
             //identifyOrangeEmotions(avg, step, min, sd);
 
-            let diff = 10;
+            let diff = 10; // the acceptable pitch difference for counting as monotonic
             identifyYellowEmotions(avg, step, diff);
 
             console.log("data is ready...");
@@ -238,7 +241,7 @@ function loadTaskData() {  //load the audio when the UI is displayed
 function getAverage() {
     var sum = 0;
     for (var i = 0; i < pitchDataInSec.length; i++) {
-        sum += pitchDataInSec[i]["data"]; //don't forget to add the base
+        sum += pitchDataInSec[i]["data"]; 
     }
     var avg = sum / pitchDataInSec.length;
     return avg;
@@ -247,7 +250,7 @@ function getAverage() {
 function getStandardDev(avg) {
     var sum = 0; 
     for (var i = 0; i < pitchDataInSec.length; i++) {
-        sum += Math.pow((pitchDataInSec[i]["data"] - avg), 2); //don't forget to add the base
+        sum += Math.pow((pitchDataInSec[i]["data"] - avg), 2); 
     }
     var sd = sum / pitchDataInSec.length;
     sd = Math.sqrt(sd);
@@ -268,7 +271,7 @@ function identifyRedEmotions(avg, step, max, sd) {
                 else
                     starts.push(t);
                 if (ends.length < starts.length)   //1, 0 -> 1, 1 yes;  1,2->no
-                    ends.push(t + step + 1); //end step seconds after
+                    ends.push(t + step + 1); //end step+1 seconds after
                 else
                     ends[ends.length - 1] = t + step // rewrite the end time
             }
@@ -314,7 +317,7 @@ function identifyYellowEmotions(avg, step, diff) {
                 else
                     starts.push(t);
                 if (ends.length < starts.length)   //1, 0 -> 1, 1 yes;  1,2->no
-                    ends.push(t + step+1); //end step seconds after
+                    ends.push(t + step+1); //end step seconds+1 after
                 else
                     ends[ends.length - 1] = t+step // rewrite the end time
             }
